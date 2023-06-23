@@ -5,10 +5,20 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Пуста сторінка</title>
+    <title>Hello</title>
 </head>
 <body>
 
+    <script>
+      let name = prompt("Введіть ваше ім'я:");
+      let greeting = `Hello, ${name}! Are you feeling good?`;
+      let response = confirm(greeting);
+      if (response) {
+        alert(`Great, ${name}! Glad to hear this!`);
+      } else {
+        alert("Ough! It's sad to hear that.\nHopefully, it won't be for long.");
+      }
+    </script>
     <script src="./js/index.js"></script>
 </body>
 </html>
