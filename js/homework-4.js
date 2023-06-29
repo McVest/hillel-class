@@ -17,11 +17,11 @@
 const getChampionName = (sport) => {
   switch (sport) {
     case "футбол":
-      return "Лео Мессі";
+      return "Круто! Хочеш стати як Лео Мессі?";
     case "теніс":
-      return "Новак Джокович";
+      return "Круто! Хочеш стати як Новак Джокович?";
     case "баскетбол":
-      return "Леброн Джеймс";
+      return "Круто! Хочеш стати як Леброн Джеймс?";
     default:
       return "";
   }
@@ -29,38 +29,33 @@ const getChampionName = (sport) => {
 const getCountryName = (capital) => {
   switch (capital) {
     case "Київ":
-      return "України";
+      return "Ти живеш у столиці України!\n";
     case "Вашингтон":
-      return "США";
+      return "Ти живеш у столиці США!\n";
     case "Лондон":
-      return "Великобританії";
+      return "Ти живеш у столиці Великобританії!\n";
     default:
-      return "";
+      return `Ти живеш у місті ${capital}!\n`;
   }
 }
 const homeWork4 = () => {
   const birthYear = prompt("Введіть ваш рік народження:");
-  if (birthYear === null || birthYear === "") {
-    return alert("Шкода, що Ви не захотіли ввести свій рік народження.");
+  if (!birthYear) {
+    alert("Шкода, що Ви не захотіли ввести свій рік народження.");
   }
   const city = prompt("Введіть ваше місто проживання:");
-  if (city === null || city === "")
-    return alert("Шкода, що Ви не захотіли ввести своє місто.");
+  if (!city)
+    alert("Шкода, що Ви не захотіли ввести своє місто.");
   const sport = prompt("Введіть ваш улюблений вид спорту (футбол, теніс, баскетбол):");
   const currentYear = new Date().getFullYear();
   const age = currentYear - parseInt(birthYear);
 
-  let message = "Ваш вік: " + age + "\n";
+  let message = !birthYear ? 'Ви не захотіли ввести свій рік народження\n' : "Ваш вік: " + age + "\n";
 
-  city === "Київ" || city === "Вашингтон" || city === "Лондон" ?
-    message += "Ти живеш у столиці " + getCountryName(city) + "!"
-    :
-    message += "Ти живеш у місті " + city + "!";
+  message += !city ? 'Ви не захотіли ввести своє місто\n' : getCountryName(city);
 
-  if (sport === "футбол" || sport === "теніс" || sport === "баскетбол") {
-    const champion = getChampionName(sport);
-    message += "\nКруто! Хочеш стати як " + champion + "?";
-  }
+  message += getChampionName(sport);
+
   return alert(message);
 }
 

@@ -1,23 +1,33 @@
+// 1. Функція для виведення на сторінку в один рядок через кому чисел від 10 до 20.
 function printNumbers() {
   let output = "";
   for (let i = 10; i <= 20; i++) {
     output += i + ", ";
   }
-  output = output.slice(0, -2); // Видаляємо останню кому
+  output = output.slice(0, -2);
   document.write(output);
 }
+// printNumbers();
+
+// 2. Функція для виведення квадратів чисел від 10 до 20.
 function printSquares() {
   for (let i = 10; i <= 20; i++) {
     let square = i * i;
     document.write(square + " ");
   }
 }
+// printSquares();
+
+// 3. Функція для виведення таблиці множення на 7.
 function printMultiplicationTable() {
   for (let i = 1; i <= 10; i++) {
     let product = 7 * i;
     document.write("7 x " + i + " = " + product + "<br>");
   }
 }
+// printMultiplicationTable();
+
+// 4. Функція для знаходження суми всіх цілих чисел від 1 до 15.
 function sumIntegers() {
   let sum = 0;
   for (let i = 1; i <= 15; i++) {
@@ -25,23 +35,32 @@ function sumIntegers() {
   }
   document.write("Сума: " + sum);
 }
+// sumIntegers();
+
+// 5. Функція для знаходження добутку усіх цілих чисел від 15 до 35.
 function calculateProduct() {
   let product = 1;
   for (let i = 15; i <= 35; i++) {
     product *= i;
   }
-  document.write("Добуток: " + product);
+  document.write("Добуток: " + BigInt(product));
 }
+// calculateProduct();
+
+// 6. Функція для знаходження середнього арифметичного всіх цілих чисел від 1 до 500.
 function calculateAverage() {
   let sum = 0;
-  let count = 0;
-  for (let i = 1; i <= 500; i++) {
-    sum += i;
-    count++;
+  let count = 1;
+  for (; count <= 500; count++) {
+    sum += count;
   }
-  let average = sum / count;
+  const average = sum / count;
+  document.write( sum);
   document.write("Середнє арифметичне: " + average);
 }
+// calculateAverage();
+
+// 7. Функція для виведення суми лише парних чисел в діапазоні від 30 до 80.
 function sumEvenNumbers() {
   let sum = 0;
   for (let i = 30; i <= 80; i++) {
@@ -51,6 +70,9 @@ function sumEvenNumbers() {
   }
   document.write("Сума парних чисел: " + sum);
 }
+// sumEvenNumbers();
+
+// 8. Функція для виведення всі числа в діапазоні від 100 до 200 кратні 3.
 function printMultiplesOfThree() {
   for (let i = 100; i <= 200; i++) {
     if (i % 3 === 0) {
@@ -58,6 +80,9 @@ function printMultiplesOfThree() {
     }
   }
 }
+// printMultiplesOfThree();
+
+// 9. Функція для знаходження і виведення на сторінку всіх дільників заданого числа.
 function printDivisors(number) {
   document.write("Дільники числа " + number + ": ");
   for (let i = 1; i <= number; i++) {
@@ -66,6 +91,10 @@ function printDivisors(number) {
     }
   }
 }
+// const number1 = parseInt(prompt("Введіть натуральне число:"));
+// printDivisors(number1);
+
+// 10. Функція для знаходження кількості парних дільників заданого числа.
 function countEvenDivisors(number) {
   let count = 0;
   for (let i = 1; i <= number; i++) {
@@ -75,6 +104,10 @@ function countEvenDivisors(number) {
   }
   document.write("Кількість парних дільників: " + count);
 }
+// const number2 = parseInt(prompt("Введіть натуральне число:"));
+// countEvenDivisors(number2);
+
+// 11. Функція для знаходження суми парних дільників заданого числа.
 function sumEvenDivisors(number) {
   let sum = 0;
   for (let i = 1; i <= number; i++) {
@@ -84,6 +117,10 @@ function sumEvenDivisors(number) {
   }
   document.write("Сума парних дільників: " + sum);
 }
+// const number3 = parseInt(prompt("Введіть натуральне число:"));
+// sumEvenDivisors(number3);
+
+// 12. Функція для виведення повної таблиці множення від 1 до 10.
 function printMultiplicationTableTen() {
   for (let i = 1; i <= 10; i++) {
     for (let j = 1; j <= 10; j++) {
@@ -93,43 +130,5 @@ function printMultiplicationTableTen() {
     document.write("<br>");
   }
 }
-
-// Функція для виведення на сторінку в один рядок через кому чисел від 10 до 20.
-// printNumbers();
-
-// Функція для виведення квадратів чисел від 10 до 20.
-// printSquares();
-
-// Функція для виведення таблиці множення на 7.
-// printMultiplicationTable();
-
-// Функція для знаходження суми всіх цілих чисел від 1 до 15.
-// sumIntegers();
-
-//Функція для знаходження добутку усіх цілих чисел від 15 до 35.
-// calculateProduct();
-
-// Функція для знаходження середнього арифметичного всіх цілих чисел від 1 до 500.
-// calculateAverage();
-
-//Функція для виведення суми лише парних чисел в діапазоні від 30 до 80.
-// sumEvenNumbers();
-
-//Функція для виведення всіх чисел в діапазоні від 100 до 200 кратних 3.
-// printMultiplesOfThree();
-
-//Функція для знаходження і виведення на сторінку всіх дільників заданого числа.
-// const number1 = parseInt(prompt("Введіть натуральне число:"));
-// printDivisors(number1);
-
-//Функція для знаходження кількості парних дільників заданого числа.
-// const number2 = parseInt(prompt("Введіть натуральне число:"));
-// countEvenDivisors(number2);
-
-//Функція для знаходження суми парних дільників заданого числа.
-// const number3 = parseInt(prompt("Введіть натуральне число:"));
-// sumEvenDivisors(number3);
-
-//Функція для виведення повної таблиці множення від 1 до 10.
 // printMultiplicationTableTen();
 
