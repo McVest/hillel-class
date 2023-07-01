@@ -39,9 +39,8 @@ const quadraticEquationSolver = () => {
   alert("Будемо знаходити рішення квадратного рівняння виду: ax^2 + bx + c = 0");
 
   const a = promptUntilValid("Введіть a");
-  if (a === null) {
+  if (a === null)
     return;
-  }
 
   const b = promptUntilValid("Введіть b");
   if (b === null)
