@@ -39,11 +39,11 @@ function sumIntegers() {
 
 // 5. Функція для знаходження добутку усіх цілих чисел від 15 до 35.
 function calculateProduct() {
-  let product = 1;
+  let product = BigInt(1);
   for (let i = 15; i <= 35; i++) {
-    product *= i;
+    product *= BigInt(i);
   }
-  document.write("Добуток: " + BigInt(product));
+  document.write("Добуток: " + product);
 }
 // calculateProduct();
 
