@@ -7,9 +7,8 @@ const promptUntilValid = (promptMessage) => {
       return null;
     }
     const number = Number(input);
-    if (!isNaN(number)) {
+    if (!isNaN(number))
       return number;
-    }
   }
 }
 
@@ -17,9 +16,9 @@ const promptUntilValid = (promptMessage) => {
 const solveQuadraticEquation = (a, b, c) => {
   // Дискриминант обчислюэться за формулою b^2-4ac
   const discriminant = b * b - 4 * a * c;
-  if (discriminant < 0) {
+  if (discriminant < 0)
     alert("D < 0. Рівняння не має рішень");
-  } else if (discriminant === 0) {
+  else if (discriminant === 0) {
     /*
       x = -(b/(2*a)
     */
@@ -45,14 +44,12 @@ const quadraticEquationSolver = () => {
   }
 
   const b = promptUntilValid("Введіть b");
-  if (b === null) {
+  if (b === null)
     return;
-  }
 
   const c = promptUntilValid("Введіть c");
-  if (c === null) {
+  if (c === null)
     return;
-  }
 
   solveQuadraticEquation(a, b, c);
 }
