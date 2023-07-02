@@ -2,13 +2,12 @@
 const promptUntilValid = (promptMessage) => {
   while (true) {
     const input = prompt(promptMessage);
-    if (!input) {
+    if (input === null) {
       alert("Жаль. Сподіваюсь ще побачитись.");
       return null;
     }
-    const number = Number(input);
-    if (!isNaN(number))
-      return number;
+    if (!isNaN(Number(input)) && input !== '')
+      return input;
   }
 }
 
