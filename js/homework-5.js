@@ -50,15 +50,16 @@ function calculateProduct() {
 // 6. Функція для знаходження середнього арифметичного всіх цілих чисел від 1 до 500.
 function calculateAverage() {
   let sum = 0;
-  let count = 1;
-  for (; count <= 500; count++) {
+  let count = 0;
+  const fiveHundred = 500;
+  while (++count <= fiveHundred)
     sum += count;
-  }
-  const average = sum / count;
-  document.write( sum);
-  document.write("Середнє арифметичне: " + average);
+  const average = sum / fiveHundred;
+
+  document.write("Сума:"  + sum);
+  document.write("<br> Середнє арифметичне: " + average);
 }
-// calculateAverage();
+calculateAverage();
 
 // 7. Функція для виведення суми лише парних чисел в діапазоні від 30 до 80.
 function sumEvenNumbers() {
@@ -83,42 +84,29 @@ function printMultiplesOfThree() {
 // printMultiplesOfThree();
 
 // 9. Функція для знаходження і виведення на сторінку всіх дільників заданого числа.
-function printDivisors(number) {
-  document.write("Дільники числа " + number + ": ");
+// 10. Функція для знаходження кількості парних дільників заданого числа.
+// 11. Функція для знаходження суми парних дільників заданого числа.
+function printDivisorsCountAndSum(number) {
+  document.write(`Дільники числа ${number}: ` );
+  let count = 0;
+  let sum = 0;
+
   for (let i = 1; i <= number; i++) {
     if (number % i === 0) {
       document.write(i + " ");
-    }
-  }
-}
-// const number1 = parseInt(prompt("Введіть натуральне число:"));
-// printDivisors(number1);
 
-// 10. Функція для знаходження кількості парних дільників заданого числа.
-function countEvenDivisors(number) {
-  let count = 0;
-  for (let i = 1; i <= number; i++) {
-    if (number % i === 0 && i % 2 === 0) {
-      count++;
+      if (i % 2 === 0) {
+        count++;
+        sum += i;
+      }
     }
   }
-  document.write("Кількість парних дільників: " + count);
-}
-// const number2 = parseInt(prompt("Введіть натуральне число:"));
-// countEvenDivisors(number2);
 
-// 11. Функція для знаходження суми парних дільників заданого числа.
-function sumEvenDivisors(number) {
-  let sum = 0;
-  for (let i = 1; i <= number; i++) {
-    if (number % i === 0 && i % 2 === 0) {
-      sum += i;
-    }
-  }
-  document.write("Сума парних дільників: " + sum);
+  document.write("<br> Кількість парних дільників: " + count);
+  document.write("<br> Сума парних дільників: " + sum);
 }
-// const number3 = parseInt(prompt("Введіть натуральне число:"));
-// sumEvenDivisors(number3);
+// const number = parseInt(prompt("Введіть натуральне число:"));
+// printDivisorsCountAndSum(number);
 
 // 12. Функція для виведення повної таблиці множення від 1 до 10.
 function printMultiplicationTableTen() {
