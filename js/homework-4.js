@@ -50,8 +50,12 @@ const homeWork4 = () => {
   const currentYear = new Date().getFullYear();
   const age = currentYear - parseInt(birthYear);
 
-  let message = !birthYear ? 'Ви не захотіли ввести свій рік народження\n' : "Ваш вік: " + age + "\n";
-
+  let message = '';
+  if (birthYear) {
+    message += !isNaN(age) ? `Ваш вік: ${age} \n` : '';
+  }else {
+    message += 'Ви не захотіли ввести свій рік народження\n'
+  }
   message += !city ? 'Ви не захотіли ввести своє місто\n' : getCountryName(city);
 
   message += getChampionName(sport);
