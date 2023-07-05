@@ -35,9 +35,12 @@ const solveQuadraticEquation = (a, b, c) => {
 }
 
 const quadraticEquationSolver = () => {
-  alert("Будемо знаходити рішення квадратного рівняння виду: ax^2 + bx + c = 0");
-
-  const a = promptUntilValid("Введіть a");
+  let a = prompt("Будемо знаходити рішення квадратного рівняння виду: ax^2 + bx + c = 0\n Введіть a");
+  if (a === null) {
+    alert("Жаль. Сподіваюсь ще побачитись.");
+    return
+  }
+  a = (!isNaN(Number(a)) && a !== '' && Number(a) !== 0  ) ? a : promptUntilValid("Введіть a");
   if (a === null)
     return;
 
