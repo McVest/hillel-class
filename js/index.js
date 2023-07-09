@@ -6,7 +6,7 @@ const promptUntilValid = (promptMessage) => {
       alert("Жаль. Сподіваюсь ще побачитись.");
       return null;
     }
-    if (!isNaN(Number(input)) && input !== '')
+    if (!isNaN(Number(input)) && input !== '' && Number(input) !== 0)
       return input;
   }
 }
@@ -44,11 +44,11 @@ const quadraticEquationSolver = () => {
   if (a === null)
     return;
 
-  const b = promptUntilValid("Введіть b");
+  const b = promptUntilValid(`a = ${a}\nВведіть b`);
   if (b === null)
     return;
 
-  const c = promptUntilValid("Введіть c");
+  const c = promptUntilValid(`a = ${a}, b = ${b}\nВведіть c`);
   if (c === null)
     return;
 
