@@ -30,7 +30,7 @@ function program() {
     } else {
       const sqrtD = Math.sqrt(d),
         x1 = (-b + sqrtD) / (2 * a),
-        x2 = (d === 0) ? x1 : (b + sqrtD) / (2 * a);
+        x2 = (d === 0) ? x1 : (-b - sqrtD) / (2 * a);
 
       return {
         d: d,
