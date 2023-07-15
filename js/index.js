@@ -5,27 +5,33 @@
 * У міру змін виводити вміст масиву на сторінку.
 * */
 const program = () => {
-  const array = [];
+  let array = [];
   const writeArray = (messages) => {
     document.write(`<h3>${messages}</h3>`);
     document.write('<ul>');
-      document.write(`<li>${array.join(', ')}</li>`);
+    document.write(`<li>${array.join(', ')}</li>`);
     document.write('</ul>');
   }
 
   const pushArray = (length) => {
-    for (let i = 0; i < length; i++) {
-      const element = parseInt(prompt(`Введіть елемент масиву на позиції ${i}:`), 10);
-      array.push(element);
-    }
+    for (let i = 0; i < length; i++)
+      array.push(prompt(`Введіть елемент масиву на позиції ${i}:`));
   }
 
   const sortArray = () => {
-    array.sort(function (a, b) {
-      return a - b;
+    let numbers = [],
+      strings = [];
+    for (let i = 0; i < array.length; i++)
+      isNaN(array[i]) ? strings.push(array[i]) : numbers.push(Number(array[i]));
+
+    strings.sort();
+    numbers.sort((a, b) => {
+      return a - b
     });
+    array = numbers.concat(strings);
   }
-  const removeElementArray = ()=>{
+
+  const removeElementArray = () => {
     array.splice(1, 3);
   }
 
