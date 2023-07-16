@@ -40,11 +40,11 @@ const getCountryName = (capital) => {
 }
 const homeWork4 = () => {
   const birthYear = prompt("Введіть ваш рік народження:");
-  if (!birthYear) {
+  if (birthYear===null) {
     alert("Шкода, що Ви не захотіли ввести свій рік народження.");
   }
   const city = prompt("Введіть ваше місто проживання:");
-  if (!city)
+  if (city===null)
     alert("Шкода, що Ви не захотіли ввести своє місто.");
   const sport = prompt("Введіть ваш улюблений вид спорту (футбол, теніс, баскетбол):");
   const currentYear = new Date().getFullYear();
@@ -58,6 +58,8 @@ const homeWork4 = () => {
   }
   message += !city ? 'Ви не захотіли ввести своє місто\n' : getCountryName(city);
 
+  if (sport===null)
+    alert("Шкода, що Ви не захотіли ввести вам улюблений спорт.")
   message += getChampionName(sport);
 
   return alert(message);
