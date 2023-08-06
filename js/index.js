@@ -5,7 +5,6 @@ validPhone = (str) => {
     const cleanLine = str.replace(/\D/g, '');
     return cleanLine.replace(/^\+?38/g, '');
 }
-
 console.log(validPhone("+380 44 364 83 65"));
 console.log(validPhone("380 44 364 83 65"));
 console.log(validPhone("+380-44-364-83-65"));
