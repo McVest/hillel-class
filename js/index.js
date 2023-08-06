@@ -1,20 +1,17 @@
-const validPhone = (str) => {
-    if (/[a-zA-Z]/.test(str))
+validPhone = (str) => {
+    const regularPhone = /^(?:\+?380)(( \d{2} \d{3} \d{2} \d{2})|(-\d{2}-\d{3}-\d{2}-\d{2}))$/;
+    if (!regularPhone.test(str))
         return null;
     const cleanLine = str.replace(/\D/g, '');
-    const checkingNumbers = /^380|^0/.exec(cleanLine);
-    if(!checkingNumbers)
-        return null;
-    const regExp = new RegExp(`${checkingNumbers[0]}`, "");
-    const localizedNumber = checkingNumbers.input.replace(regExp, '0')
-    if (localizedNumber.length === 10)
-        return localizedNumber;
-    return null;
+    return cleanLine.replace(/^\+?38/g, '');
 }
 
 console.log(validPhone("+380 44 364 83 65"));
-console.log(validPhone("+(380) 11 111 83 65"));
+console.log(validPhone("380 44 364 83 65"));
+console.log(validPhone("+380-44-364-83-65"));
 console.log(validPhone("380-44-364-83-65"));
-console.log(validPhone("0-68-06-123-87"));
-console.log(validPhone("+38 044 364 83 65"));
-console.log(validPhone(" 44 364 83 65"));
+console.log(validPhone(" + 380--- 44__ 364 \t 83 65"));
+console.log(validPhone("380443648365"));
+console.log(validPhone("0-44-364-83-65"));
+console.log(validPhone(`380-44" +
+364-83-65`));
