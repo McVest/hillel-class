@@ -12,7 +12,7 @@ class Human {
 class Car {
   owner;
   
-  constructor(brand, model, licensePlate, yearOfManufacture, owner) {
+  constructor(brand, model, licensePlate, yearOfManufacture) {
     this.brand = brand;
     this.model = model;
     this.yearOfManufacture = yearOfManufacture;
