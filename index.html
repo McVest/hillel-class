@@ -7,11 +7,24 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Hello</title>
     <style>
-        body {
+        #slider-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        #slider {
+            display: flex;
+            transition: transform 0.3s ease-in-out;
             max-width: 1280px;
             width: 100%;
             height: 720px;
-            margin: auto;
+        }
+
+        .slide {
+            flex: 0 0 100%;
+            min-width: 100%;
         }
 
         img {
@@ -19,10 +32,43 @@
             height: 100%;
             object-fit: cover;
         }
+
+        button {
+            cursor: pointer;
+        }
+
+        #prev-btn {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        #next-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
     </style>
 </head>
 <body>
-
+<div id="slider-container">
+    <div id="slider">
+        <div class="slide"><img src="./images/1.jpg" alt="Image 1"></div>
+        <div class="slide"><img src="./images/2.jpg" alt="Image 2"></div>
+        <div class="slide"><img src="./images/3.jpg" alt="Image 3"></div>
+        <div class="slide"><img src="./images/4.jpg" alt="Image 4"></div>
+        <div class="slide"><img src="./images/5.jpg" alt="Image 5"></div>
+        <div class="slide"><img src="./images/6.jpg" alt="Image 6"></div>
+        <div class="slide"><img src="./images/7.jpg" alt="Image 7"></div>
+        <div class="slide"><img src="./images/8.jpg" alt="Image 8"></div>
+        <div class="slide"><img src="./images/9.jpg" alt="Image 9"></div>
+        <!-- Add more slides here -->
+    </div>
+    <button id="prev-btn">Prev</button>
+    <button id="next-btn">Next</button>
+</div>
 <script type="module" src="./js/index.js"></script>
 </body>
 </html>

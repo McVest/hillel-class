@@ -1,8 +1,33 @@
+const slider = document.getElementById('slider');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+let currentIndex = 0;
 
-const imageNames = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg", "7.jpg", "8.jpg", "9.jpg"];
-const randomIndex = Math.floor(Math.random() * imageNames.length);
-const randomImageName = imageNames[randomIndex];
-const imgElement = document.createElement("img");
-imgElement.src = "../images/" + randomImageName;
-const firstElement = document.body.firstChild;
-document.body.insertBefore(imgElement, firstElement);
+prevBtn.addEventListener('click', showPrevSlide);
+nextBtn.addEventListener('click', showNextSlide);
+
+function showPrevSlide() {
+  if (currentIndex > 0) {
+    currentIndex--;
+    updateSliderPosition();
+  }
+}
+
+function showNextSlide() {
+  if (currentIndex < slider.children.length - 1) {
+    currentIndex++;
+    updateSliderPosition();
+  }
+}
+
+function updateSliderPosition() {
+  const slideWidth = slider.children[0].clientWidth;
+  slider.style.transform = `translateX(-${slideWidth * currentIndex}px)`;
+  
+  // Show/hide buttons based on index
+  prevBtn.disabled = currentIndex === 0;
+  nextBtn.disabled = currentIndex === slider.children.length - 1;
+}
+
+// Initialize slider position and button states
+updateSliderPosition();
