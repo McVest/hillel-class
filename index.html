@@ -6,9 +6,70 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Hello</title>
+	<style>
+		.categories, .products, .product-info {
+			float: left;
+			margin: 10px;
+			padding: 10px;
+			border: 1px solid #ccc;
+			width: 30%;
+			box-sizing: border-box;
+		}
+		
+		.categories {
+			background-color: #f0f0f0;
+		}
+		ul {
+			list-style-type: none;
+			padding: 0;
+		}
+		
+		li {
+			margin-bottom: 5px;
+		}
+		
+		a {
+			text-decoration: none;
+			color: #333;
+		}
+		button {
+			background-color: #007bff;
+			color: #fff;
+			border: none;
+			padding: 5px 10px;
+			cursor: pointer;
+		}
+		
+		button:hover {
+			background-color: #0056b3;
+		}
+		
+		h2 {
+			font-size: 18px;
+			margin-bottom: 10px;
+		}
+	
+	</style>
 </head>
 <body>
 
-    <script type="module" src="./js/index.js"></script>
+<div class="categories">
+	<h2>Категорії</h2>
+	<ul>
+		<li><a href="#" onclick="showCategory('Категорія 1')">Категорія 1</a></li>
+		<li><a href="#" onclick="showCategory('Категорія 2')">Категорія 2</a></li>
+	</ul>
+</div>
+<div class="products">
+	<h2>Товари</h2>
+	<ul id="product-list">
+	</ul>
+</div>
+<div class="product-info">
+	<h2>Інформація про товар</h2>
+	<div id="product-details">
+	</div>
+</div>
+    <script src="./js/index.js"></script>
 </body>
 </html>
