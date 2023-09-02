@@ -1,27 +1,40 @@
+const PRODUCT = [
+  {name: 'Пенал', category: 'Категорія 1', price: 100},
+  {name: 'Ручка', category: 'Категорія 1', price: 150},
+  {name: 'Тости', category: 'Категорія 2', price: 200},
+];
+
 function showCategory(category) {
-  document.getElementById('product-list').innerHTML = '';
+  const productList = document.getElementById('product-list');
+  productList.innerHTML = '';
   document.getElementById('product-details').innerHTML = '';
   const products = getProductsByCategory(category);
+  const ulItem = document.createElement('ul');
   for (let i = 0; i < products.length; i++) {
     const product = products[i];
     const listItem = document.createElement('li');
-    listItem.innerHTML = '<a href="#" onclick="showProductDetails(\'' + product.name + '\')">' + product.name + '</a>';
-    document.getElementById('product-list').appendChild(listItem);
+    const link = document.createElement('a');
+    link.href = '#';
+    link.textContent = product.name;
+    link.addEventListener('click', function (event) {
+      event.preventDefault();
+      showProductDetails(product);
+    });
+    listItem.appendChild(link);
+    ulItem.appendChild(listItem);
   }
+  productList.appendChild(ulItem);
 }
+
 
 function getProductsByCategory(category) {
-  return [
-    {name: 'Товар 1', category: 'Категорія 1', price: 100},
-    {name: 'Товар 2', category: 'Категорія 1', price: 150},
-    {name: 'Товар 3', category: 'Категорія 2', price: 200},
-  ];
+  return PRODUCT.filter(item => item.category === category);
 }
 
-function showProductDetails(productName) {
+function showProductDetails(productItems) {
   document.getElementById('product-details').innerHTML = '';
   
-  const product = getProductByName(productName);
+  const product = getProductByName(productItems);
   
   const productInfo = document.createElement('div');
   productInfo.innerHTML = '<p>Назва: ' + product.name + '</p>' +
@@ -31,11 +44,11 @@ function showProductDetails(productName) {
   document.getElementById('product-details').appendChild(productInfo);
 }
 
-function getProductByName(productName) {
+function getProductByName(productItems) {
   return {
-    name: productName,
-    category: 'Категорія 1',
-    price: 100
+    name: productItems.name,
+    category: productItems.category,
+    price: productItems.price
   };
 }
 
