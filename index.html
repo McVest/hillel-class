@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Hello</title>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Hello</title>
 	<style>
 		body{
 			display: flex;
@@ -50,10 +50,6 @@
 			font-size: 18px;
 			margin-bottom: 10px;
 		}
-		
-		#order-form {
-			display: none;
-		}
 	</style>
 </head>
 <body>
@@ -73,41 +69,8 @@
 <div class="product-info">
 	<h2>Інформація про товар</h2>
 	<div id="product-details">
-		<!-- Product information will be displayed here -->
-	</div>
-	<div id="order-form" style="display: none;">
-		<h3>Форма оформлення замовлення</h3>
-		<form id="order-details-form">
-			<label for="customer-name">ПІБ покупця:</label>
-			<input type="text" id="customer-name" required><br>
-			
-			<label for="city">Місто:</label>
-			<select id="city" required>
-				<option value="Kyiv">Київ</option>
-				<option value="Lviv">Львів</option>
-				<option value="Odessa">Одеса</option>
-				<!-- Add more cities as needed -->
-			</select><br>
-			
-			<label for="nova-poshta">Склад Нової пошти:</label>
-			<input type="text" id="nova-poshta" required><br>
-			
-			<label for="payment-cash-on-delivery">Спосіб оплати:</label>
-			<input type="radio" id="payment-cash-on-delivery" name="payment" value="cash-on-delivery" required>
-			<label for="payment-cash-on-delivery">Післяплата</label>
-			<input type="radio" id="payment-credit-card" name="payment" value="credit-card" required>
-			<label for="payment-credit-card">Оплата банківською карткою</label><br>
-			
-			<label for="quantity">Кількість:</label>
-			<input type="number" id="quantity" min="1" value="1" required><br>
-			
-			<label for="comment">Коментар до замовлення:</label>
-			<textarea id="comment" rows="4"></textarea><br>
-			
-			<button type="button" id="confirm-order-button">Підтвердити замовлення</button>
-		</form>
 	</div>
 </div>
-    <script src="./js/index.js"></script>
+<script src="./js/index.js"></script>
 </body>
 </html>
