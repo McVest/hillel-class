@@ -4,6 +4,25 @@ const PRODUCT = [
   { name: 'Тости', category: 'Категорія 2', price: 24 },
   { name: 'Молоко', category: 'Категорія 2', price: 35 },
 ];
+let orders = [];
+
+if (localStorage.getItem('orders')) {
+  orders = JSON.parse(localStorage.getItem('orders'));
+}
+function saveOrder(order) {
+  orders.push(order);
+  localStorage.setItem('orders', JSON.stringify(orders));
+}
+
+function getOrders() {
+  return orders;
+}
+
+function deleteOrder(index) {
+  orders.splice(index, 1);
+  localStorage.setItem('orders', JSON.stringify(orders));
+  showMyOrders();
+}
 
 function showCategory(category) {
   const productList = document.getElementById('product-list');
@@ -58,7 +77,6 @@ function showOrderForm(productName, productCategory, productPrice) {
   orderForm.dataset.productPrice = productPrice;
 }
 
-// Функція для підтвердження замовлення
 function confirmOrder() {
   const orderForm = document.getElementById('order-form');
   const productName = orderForm.dataset.productName;
@@ -70,7 +88,6 @@ function confirmOrder() {
   const quantity = document.getElementById('quantity').value;
   const comment = document.getElementById('comment').value;
   
-  // Отримуємо значення обраного способу оплати, перевіряючи, чи є вибраний елемент
   const paymentCashOnDelivery = document.querySelector('input#payment-cash-on-delivery[name="payment-method"]:checked');
   const paymentCreditCard = document.querySelector('input#payment-credit-card[name="payment-method"]:checked');
   
@@ -80,27 +97,62 @@ function confirmOrder() {
   }
   
   const paymentMethod = paymentCashOnDelivery ? paymentCashOnDelivery.value : paymentCreditCard.value;
-  
-  // Перевірка обов'язкових полів
+  const orderDetails = {
+    date: new Date().toLocaleDateString(),
+    productName: productName,
+    productCategory: productCategory,
+    productPrice: productPrice,
+    customerName: customerName,
+    city: city,
+    postOffice: postOffice,
+    paymentMethod: paymentMethod,
+    quantity: quantity,
+    comment: comment,
+  };
   if (customerName && city && postOffice && paymentMethod && quantity) {
-    // Формуємо інформацію про замовлення з усіма даними
-    const orderDetails = `
-      <p><strong>Назва товару:</strong> ${productName}</p>
-      <p><strong>Категорія:</strong> ${productCategory}</p>
-      <p><strong>Ціна:</strong> ${productPrice} грн</p>
-      <p><strong>ПІБ покупця:</strong> ${customerName}</p>
-      <p><strong>Місто:</strong> ${city}</p>
-      <p><strong>Склад Нової пошти для надсилання:</strong> ${postOffice}</p>
-      <p><strong>Спосіб оплати:</strong> ${paymentMethod}</p>
-      <p><strong>Кількість продукції, що купується:</strong> ${quantity}</p>
-      <p><strong>Коментар до замовлення:</strong> ${comment}</p>
-    `;
-    
-    // Виводимо інформацію про замовлення
-    document.getElementById('order-details-content').innerHTML = orderDetails;
-    document.getElementById('order-details').style.display = 'block';
+    orderDetailsContent(orderDetails);
+    saveOrder(orderDetails);
     document.getElementById('order-form').style.display = 'none';
   } else {
     alert('Будь ласка, заповніть всі обов\'язкові поля.');
   }
+}
+function showMyOrders() {
+  const productList = document.getElementById('product-list');
+  productList.innerHTML = '';
+  document.getElementById('product-details').innerHTML = '';
+  document.getElementById('order-details').style.display = 'none';
+  
+  const myOrders = getOrders();
+  const ulItem = document.createElement('ul');
+  myOrders.forEach(function (order, index) {
+    const listItem = document.createElement('li');
+    listItem.innerHTML =
+      `<div>
+          <a href="#" onclick="showOrderDetails(${index})">${order.date} - ${order.productPrice} грн</a>
+          <button type="button" onclick="deleteOrder(${index})">Видалити замовлення</button>
+      </div>`;
+    ulItem.appendChild(listItem);
+  });
+  productList.appendChild(ulItem);
+}
+function showOrderDetails(index) {
+  const order = getOrders()[index];
+  orderDetailsContent(order);
+}
+
+function orderDetailsContent(order){
+  const orderDetailsContent = document.getElementById('order-details-content');
+  orderDetailsContent.innerHTML = `
+      <p><strong>Назва товару:</strong> ${order.productName}</p>
+      <p><strong>Категорія:</strong> ${order.productCategory}</p>
+      <p><strong>Ціна:</strong> ${order.productPrice} грн</p>
+      <p><strong>ПІБ покупця:</strong> ${order.customerName}</p>
+      <p><strong>Місто:</strong> ${order.city}</p>
+      <p><strong>Склад Нової пошти для надсилання:</strong> ${order.postOffice}</p>
+      <p><strong>Спосіб оплати:</strong> ${order.paymentMethod}</p>
+      <p><strong>Кількість продукції, що купується:</strong> ${order.quantity}</p>
+      <p><strong>Коментар до замовлення:</strong> ${order.comment}</p>
+    `;
+  document.getElementById('order-details').style.display = 'block';
 }
