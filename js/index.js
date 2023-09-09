@@ -4,6 +4,12 @@ const PRODUCT = [
   { name: 'Тости', category: 'Категорія 2', price: 24 },
   { name: 'Молоко', category: 'Категорія 2', price: 35 },
 ];
+
+const productDetails = document.getElementById('product-details');
+const productList = document.getElementById('product-list');
+const orderForm = document.getElementById('order-form');
+
+
 let orders = [];
 
 if (localStorage.getItem('orders')) {
@@ -25,9 +31,8 @@ function deleteOrder(index) {
 }
 
 function showCategory(category) {
-  const productList = document.getElementById('product-list');
   productList.innerHTML = '';
-  document.getElementById('product-details').innerHTML = '';
+  productDetails.innerHTML = '';
   const products = getProductsByCategory(category);
   const ulItem = document.createElement('ul');
   for (let i = 0; i < products.length; i++) {
@@ -51,7 +56,7 @@ function getProductsByCategory(category) {
 }
 
 function showProductDetails(productItems) {
-  document.getElementById('product-details').innerHTML = '';
+  productDetails.innerHTML = '';
   
   const productInfo = document.createElement('div');
   productInfo.innerHTML = `
@@ -59,11 +64,10 @@ function showProductDetails(productItems) {
     <p><strong>Категорія:</strong> ${productItems.category}</p>
     <p><strong>Ціна:</strong> ${productItems.price} грн</p>
     <button onclick="showOrderForm('${productItems.name}', '${productItems.category}', ${productItems.price})">Купити</button>`;
-  document.getElementById('product-details').appendChild(productInfo);
+  productDetails.appendChild(productInfo);
 }
 
 function showOrderForm(productName, productCategory, productPrice) {
-  const orderForm = document.getElementById('order-form');
   orderForm.style.display = 'block';
   
   orderForm.querySelector('#customer-name').value = '';
@@ -78,7 +82,6 @@ function showOrderForm(productName, productCategory, productPrice) {
 }
 
 function confirmOrder() {
-  const orderForm = document.getElementById('order-form');
   const productName = orderForm.dataset.productName;
   const productCategory = orderForm.dataset.productCategory;
   const productPrice = orderForm.dataset.productPrice;
@@ -112,15 +115,14 @@ function confirmOrder() {
   if (customerName && city && postOffice && paymentMethod && quantity) {
     orderDetailsContent(orderDetails);
     saveOrder(orderDetails);
-    document.getElementById('order-form').style.display = 'none';
+    orderForm.style.display = 'none';
   } else {
     alert('Будь ласка, заповніть всі обов\'язкові поля.');
   }
 }
 function showMyOrders() {
-  const productList = document.getElementById('product-list');
   productList.innerHTML = '';
-  document.getElementById('product-details').innerHTML = '';
+  productDetails.innerHTML = '';
   document.getElementById('order-details').style.display = 'none';
   
   const myOrders = getOrders();
