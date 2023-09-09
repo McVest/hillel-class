@@ -41,6 +41,11 @@ function showProductDetails(productItems) {
     '<p>Ціна: ' + productItems.price + ' грн</p>' +
     '<button onclick="buyProduct(\'' + productItems.name + '\')">Купити</button>';
   document.getElementById('product-details').appendChild(productInfo);
+  
+  const buyButton = document.getElementById('buy-button');
+  buyButton.addEventListener('click', function () {
+    showOrderForm(product);
+  });
 }
 
 function getProductByName(productItems) {
@@ -55,4 +60,54 @@ function buyProduct(productName) {
   alert('Товар ' + productName + ' куплений!');
   document.getElementById('product-list').innerHTML = '';
   document.getElementById('product-details').innerHTML = '';
+}
+
+function showOrderForm(product) {
+  const orderForm = document.getElementById('order-form');
+  orderForm.style.display = 'block';
+  
+  const confirmOrderButton = document.getElementById('confirm-order-button');
+  confirmOrderButton.addEventListener('click', function () {
+    confirmOrder(product);
+  });
+}
+function confirmOrder(product) {
+  const customerName = document.getElementById('customer-name').value;
+  const city = document.getElementById('city').value;
+  const novaPoshta = document.getElementById('nova-poshta').value;
+  const paymentMethod = document.querySelector('input[name="payment"]:checked');
+  const quantity = document.getElementById('quantity').value;
+  const comment = document.getElementById('comment').value;
+  
+  if (!customerName || !city || !novaPoshta || !paymentMethod || !quantity) {
+    alert('Заповніть всі обов’язкові поля перед підтвердженням замовлення.');
+    return;
+  }
+  
+  const orderInfo = {
+    productName: product.name,
+    category: product.category,
+    price: product.price,
+    customerName: customerName,
+    city: city,
+    novaPoshta: novaPoshta,
+    paymentMethod: paymentMethod.value,
+    quantity: quantity,
+    comment: comment,
+  };
+  
+  displayOrderInfo(orderInfo);
+}
+function displayOrderInfo(orderInfo) {
+  const orderDetails = document.getElementById('product-details');
+  orderDetails.innerHTML = '<h3>Інформація про замовлення</h3>' +
+    '<p>Назва товару: ' + orderInfo.productName + '</p>' +
+    '<p>Категорія: ' + orderInfo.category + '</p>' +
+    '<p>Ціна: ' + orderInfo.price + ' грн</p>' +
+    '<p>ПІБ покупця: ' + orderInfo.customerName + '</p>' +
+    '<p>Місто: ' + orderInfo.city + '</p>' +
+    '<p>Склад Нової пошти: ' + orderInfo.novaPoshta + '</p>' +
+    '<p>Спосіб оплати: ' + (orderInfo.paymentMethod === 'cash-on-delivery' ? 'Післяплата' : 'Оплата банківською карткою') + '</p>' +
+    '<p>Кількість: ' + orderInfo.quantity + '</p>' +
+    '<p>Коментар до замовлення: ' + orderInfo.comment + '</p>';
 }
