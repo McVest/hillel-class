@@ -1,7 +1,8 @@
 const PRODUCT = [
-  {name: 'Пенал', category: 'Категорія 1', price: 100},
-  {name: 'Ручка', category: 'Категорія 1', price: 150},
-  {name: 'Тости', category: 'Категорія 2', price: 200},
+  {name: 'Пенал', category: 'Категорія 1', price: 300},
+  {name: 'Ручка', category: 'Категорія 1', price: 15},
+  {name: 'Тости', category: 'Категорія 2', price: 24},
+  {name: 'Молоко', category: 'Категорія 2', price: 35},
 ];
 
 function showCategory(category) {
@@ -34,13 +35,11 @@ function getProductsByCategory(category) {
 function showProductDetails(productItems) {
   document.getElementById('product-details').innerHTML = '';
   
-  const product = getProductByName(productItems);
-  
   const productInfo = document.createElement('div');
-  productInfo.innerHTML = '<p>Назва: ' + product.name + '</p>' +
-    '<p>Категорія: ' + product.category + '</p>' +
-    '<p>Ціна: ' + product.price + ' грн</p>' +
-    '<button onclick="buyProduct(\'' + product.name + '\')">Купити</button>';
+  productInfo.innerHTML = '<p>Назва: ' + productItems.name + '</p>' +
+    '<p>Категорія: ' + productItems.category + '</p>' +
+    '<p>Ціна: ' + productItems.price + ' грн</p>' +
+    '<button onclick="buyProduct(\'' + productItems.name + '\')">Купити</button>';
   document.getElementById('product-details').appendChild(productInfo);
 }
 
