@@ -77,14 +77,14 @@ function showOrderForm(product) {
     orderForm.style.display = 'none';
     document.getElementById('product-list').innerHTML = '';
     document.getElementById('product-details').innerHTML = '';
+    form.reset();
   })
 }
 
 function displayOrderInfo(orderInfo) {
-  const orderDetails = document.createElement('div');
-  const store = document.querySelector('.store');
+  const store = document.querySelector('.order');
   
-  orderDetails.innerHTML = '<h3>Інформація про замовлення</h3>' +
+  store.innerHTML = '<h3>Інформація про замовлення</h3>' +
     '<p>Назва товару: ' + orderInfo.productName + '</p>' +
     '<p>Категорія: ' + orderInfo.category + '</p>' +
     '<p>Ціна: ' + orderInfo.price + ' грн</p>' +
@@ -94,5 +94,4 @@ function displayOrderInfo(orderInfo) {
     '<p>Спосіб оплати: ' + (orderInfo.paymentMethod === 'cash-on-delivery' ? 'Післяплата' : 'Оплата банківською карткою') + '</p>' +
     '<p>Кількість: ' + orderInfo.quantity + '</p>' +
     '<p>Коментар до замовлення: ' + orderInfo.comment + '</p>';
-  store.appendChild(orderDetails);
 }
