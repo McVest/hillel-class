@@ -43,14 +43,6 @@ function showProductDetails(productItems) {
   document.getElementById('product-details').appendChild(productInfo);
 }
 
-function getProductByName(productItems) {
-  return {
-    name: productItems.name,
-    category: productItems.category,
-    price: productItems.price
-  };
-}
-
 function buyProduct(productName) {
   alert('Товар ' + productName + ' куплений!');
   document.getElementById('product-list').innerHTML = '';
