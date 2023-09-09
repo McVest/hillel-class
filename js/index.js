@@ -58,34 +58,49 @@ function showOrderForm(productName, productCategory, productPrice) {
   orderForm.dataset.productPrice = productPrice;
 }
 
+// Функція для підтвердження замовлення
 function confirmOrder() {
   const orderForm = document.getElementById('order-form');
   const productName = orderForm.dataset.productName;
   const productCategory = orderForm.dataset.productCategory;
   const productPrice = orderForm.dataset.productPrice;
-  const customerName = orderForm.querySelector('#customer-name').value;
-  const city = orderForm.querySelector('#city').value;
-  const postOffice = orderForm.querySelector('#post-office').value;
-  const paymentMethod = document.querySelector('input#payment-cash-on-delivery[name="payment-method"]:checked').value;
-  const quantity = orderForm.querySelector('#quantity').value;
-  const comment = orderForm.querySelector('#comment').value;
+  const customerName = document.getElementById('customer-name').value;
+  const city = document.getElementById('city').value;
+  const postOffice = document.getElementById('post-office').value;
+  const quantity = document.getElementById('quantity').value;
+  const comment = document.getElementById('comment').value;
   
+  // Отримуємо значення обраного способу оплати, перевіряючи, чи є вибраний елемент
+  const paymentCashOnDelivery = document.querySelector('input#payment-cash-on-delivery[name="payment-method"]:checked');
+  const paymentCreditCard = document.querySelector('input#payment-credit-card[name="payment-method"]:checked');
+  
+  if (!paymentCashOnDelivery && !paymentCreditCard) {
+    alert('Будь ласка, виберіть спосіб оплати.');
+    return;
+  }
+  
+  const paymentMethod = paymentCashOnDelivery ? paymentCashOnDelivery.value : paymentCreditCard.value;
+  
+  // Перевірка обов'язкових полів
   if (customerName && city && postOffice && paymentMethod && quantity) {
-    document.getElementById('order-details-content').innerHTML = `
+    // Формуємо інформацію про замовлення з усіма даними
+    const orderDetails = `
       <p><strong>Назва товару:</strong> ${productName}</p>
       <p><strong>Категорія:</strong> ${productCategory}</p>
       <p><strong>Ціна:</strong> ${productPrice} грн</p>
       <p><strong>ПІБ покупця:</strong> ${customerName}</p>
       <p><strong>Місто:</strong> ${city}</p>
       <p><strong>Склад Нової пошти для надсилання:</strong> ${postOffice}</p>
-      <p><strong>Післяплати або оплата банківської картки:</strong> ${paymentMethod}</p>
+      <p><strong>Спосіб оплати:</strong> ${paymentMethod}</p>
       <p><strong>Кількість продукції, що купується:</strong> ${quantity}</p>
       <p><strong>Коментар до замовлення:</strong> ${comment}</p>
     `;
+    
+    // Виводимо інформацію про замовлення
+    document.getElementById('order-details-content').innerHTML = orderDetails;
     document.getElementById('order-details').style.display = 'block';
-    orderForm.style.display = 'none';
+    document.getElementById('order-form').style.display = 'none';
   } else {
     alert('Будь ласка, заповніть всі обов\'язкові поля.');
   }
 }
-
