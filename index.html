@@ -51,6 +51,17 @@
 			font-size: 18px;
 			margin-bottom: 10px;
 		}
+		
+		#order-form-fields {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+		}
+		
+		.input {
+			display: flex;
+			flex-direction: column;
+		}
 	</style>
 </head>
 <body>
@@ -76,29 +87,38 @@
 <div id="order-form" style="display: none;">
 	<h2>Форма оформлення замовлення</h2>
 	<form id="order-form-fields">
-		<label for="customer-name">ПІБ покупця:</label>
-		<input type="text" id="customer-name" required><br>
-		
+		<div class="input">
+			<label for="customer-name">ПІБ покупця:</label>
+			<input type="text" id="customer-name" required>
+		</div>
+		<div class="input">
 		<label for="city">Місто:</label>
 		<select id="city" required>
 			<option value="Київ">Київ</option>
 			<option value="Львів">Львів</option>
 			<option value="Харків">Харків</option>
 			<!-- Додайте інші міста за потреби -->
-		</select><br>
-		
-		<label for="post-office">Склад Нової пошти для надсилання:</label>
-		<input type="text" id="post-office" required><br>
-		
-		<label for="payment-method">Післяплати або оплати банківської картки:</label>
-		<input type="text" id="payment-method" required><br>
-		
-		<label for="quantity">Кількість продукції, що купується:</label>
-		<input type="number" id="quantity" required><br>
-		
-		<label for="comment">Коментар до замовлення:</label>
-		<textarea id="comment"></textarea><br>
-		
+		</select>
+		</div>
+		<div class="input">
+			<label for="post-office">Склад Нової пошти для надсилання:</label>
+			<input type="text" id="post-office" required><br>
+		</div>
+		<div class="input" style="flex-direction: row;">
+			<label>Спосіб оплати:</label><br>
+			<input type="radio" id="payment-cash-on-delivery" name="payment-method" checked value="Післяплати">
+			<label for="payment-cash-on-delivery">Післяплати</label><br>
+			<input type="radio" id="payment-credit-card" name="payment-method" value="Банківська карта">
+			<label for="payment-credit-card">Банківська карта</label>
+		</div>
+		<div class="input">
+			<label for="quantity">Кількість продукції, що купується:</label>
+			<input type="number" id="quantity" required><br>
+		</div>
+		<div class="input">
+			<label for="comment">Коментар до замовлення:</label>
+			<textarea id="comment"></textarea><br>
+		</div>
 		<button type="button" onclick="confirmOrder()">Підтвердити замовлення</button>
 	</form>
 </div>

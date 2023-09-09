@@ -43,26 +43,21 @@ function showProductDetails(productItems) {
   document.getElementById('product-details').appendChild(productInfo);
 }
 
-// Функція для відображення форми оформлення замовлення
 function showOrderForm(productName, productCategory, productPrice) {
   const orderForm = document.getElementById('order-form');
   orderForm.style.display = 'block';
   
-  // Очищаємо попередні дані в формі
   orderForm.querySelector('#customer-name').value = '';
   orderForm.querySelector('#city').selectedIndex = 0;
   orderForm.querySelector('#post-office').value = '';
-  orderForm.querySelector('#payment-method').value = '';
   orderForm.querySelector('#quantity').value = '';
   orderForm.querySelector('#comment').value = '';
   
-  // Запам'ятовуємо дані про товар в атрибутах форми
   orderForm.dataset.productName = productName;
   orderForm.dataset.productCategory = productCategory;
   orderForm.dataset.productPrice = productPrice;
 }
 
-// Функція для підтвердження замовлення
 function confirmOrder() {
   const orderForm = document.getElementById('order-form');
   const productName = orderForm.dataset.productName;
@@ -71,14 +66,12 @@ function confirmOrder() {
   const customerName = orderForm.querySelector('#customer-name').value;
   const city = orderForm.querySelector('#city').value;
   const postOffice = orderForm.querySelector('#post-office').value;
-  const paymentMethod = orderForm.querySelector('#payment-method').value;
+  const paymentMethod = document.querySelector('input#payment-cash-on-delivery[name="payment-method"]:checked').value;
   const quantity = orderForm.querySelector('#quantity').value;
   const comment = orderForm.querySelector('#comment').value;
   
-  // Перевірка обов'язкових полів
   if (customerName && city && postOffice && paymentMethod && quantity) {
-    // Формуємо інформацію про замовлення з усіма даними
-    const orderDetails = `
+    document.getElementById('order-details-content').innerHTML = `
       <p><strong>Назва товару:</strong> ${productName}</p>
       <p><strong>Категорія:</strong> ${productCategory}</p>
       <p><strong>Ціна:</strong> ${productPrice} грн</p>
@@ -89,9 +82,6 @@ function confirmOrder() {
       <p><strong>Кількість продукції, що купується:</strong> ${quantity}</p>
       <p><strong>Коментар до замовлення:</strong> ${comment}</p>
     `;
-    
-    // Виводимо інформацію про замовлення
-    document.getElementById('order-details-content').innerHTML = orderDetails;
     document.getElementById('order-details').style.display = 'block';
     orderForm.style.display = 'none';
   } else {
