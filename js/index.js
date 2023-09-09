@@ -1,8 +1,8 @@
 const PRODUCT = [
-  {name: 'Пенал', category: 'Категорія 1', price: 300},
-  {name: 'Ручка', category: 'Категорія 1', price: 15},
-  {name: 'Тости', category: 'Категорія 2', price: 24},
-  {name: 'Молоко', category: 'Категорія 2', price: 35},
+  { name: 'Пенал', category: 'Категорія 1', price: 300 },
+  { name: 'Ручка', category: 'Категорія 1', price: 15 },
+  { name: 'Тости', category: 'Категорія 2', price: 24 },
+  { name: 'Молоко', category: 'Категорія 2', price: 35 },
 ];
 
 function showCategory(category) {
@@ -27,7 +27,6 @@ function showCategory(category) {
   productList.appendChild(ulItem);
 }
 
-
 function getProductsByCategory(category) {
   return PRODUCT.filter(item => item.category === category);
 }
@@ -36,62 +35,67 @@ function showProductDetails(productItems) {
   document.getElementById('product-details').innerHTML = '';
   
   const productInfo = document.createElement('div');
-  productInfo.innerHTML = '<p>Назва: ' + productItems.name + '</p>' +
-    '<p>Категорія: ' + productItems.category + '</p>' +
-    '<p>Ціна: ' + productItems.price + ' грн</p>' +
-    '<button id="buy-button">Купити</button>';
+  productInfo.innerHTML = `
+    <p><strong>Назва:</strong> ${productItems.name}</p>
+    <p><strong>Категорія:</strong> ${productItems.category}</p>
+    <p><strong>Ціна:</strong> ${productItems.price} грн</p>
+    <button onclick="showOrderForm('${productItems.name}', '${productItems.category}', ${productItems.price})">Купити</button>`;
   document.getElementById('product-details').appendChild(productInfo);
-  const buyButton = document.getElementById('buy-button');
-  buyButton.addEventListener('click', function () {
-    showOrderForm(productItems);
-  });
 }
 
-function showOrderForm(product) {
-  console.log(product);
+// Функція для відображення форми оформлення замовлення
+function showOrderForm(productName, productCategory, productPrice) {
   const orderForm = document.getElementById('order-form');
   orderForm.style.display = 'block';
   
-  const form = document.getElementById('order-details-form');
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    const customerName = document.getElementById('customer-name').value;
-    const city = document.getElementById('city').value;
-    const novaPoshta = document.getElementById('nova-poshta').value;
-    const paymentMethod = document.querySelector('input[name="payment"]:checked');
-    const quantity = document.getElementById('quantity').value;
-    const comment = document.getElementById('comment').value;
-    const orderInfo = {
-      productName: product.name,
-      category: product.category,
-      price: product.price,
-      customerName: customerName,
-      city: city,
-      novaPoshta: novaPoshta,
-      paymentMethod: paymentMethod.value,
-      quantity: quantity,
-      comment: comment,
-    };
-    console.log(orderInfo);
-    displayOrderInfo(orderInfo);
-    orderForm.style.display = 'none';
-    document.getElementById('product-list').innerHTML = '';
-    document.getElementById('product-details').innerHTML = '';
-    form.reset();
-  })
+  // Очищаємо попередні дані в формі
+  orderForm.querySelector('#customer-name').value = '';
+  orderForm.querySelector('#city').selectedIndex = 0;
+  orderForm.querySelector('#post-office').value = '';
+  orderForm.querySelector('#payment-method').value = '';
+  orderForm.querySelector('#quantity').value = '';
+  orderForm.querySelector('#comment').value = '';
+  
+  // Запам'ятовуємо дані про товар в атрибутах форми
+  orderForm.dataset.productName = productName;
+  orderForm.dataset.productCategory = productCategory;
+  orderForm.dataset.productPrice = productPrice;
 }
 
-function displayOrderInfo(orderInfo) {
-  const store = document.querySelector('.order');
+// Функція для підтвердження замовлення
+function confirmOrder() {
+  const orderForm = document.getElementById('order-form');
+  const productName = orderForm.dataset.productName;
+  const productCategory = orderForm.dataset.productCategory;
+  const productPrice = orderForm.dataset.productPrice;
+  const customerName = orderForm.querySelector('#customer-name').value;
+  const city = orderForm.querySelector('#city').value;
+  const postOffice = orderForm.querySelector('#post-office').value;
+  const paymentMethod = orderForm.querySelector('#payment-method').value;
+  const quantity = orderForm.querySelector('#quantity').value;
+  const comment = orderForm.querySelector('#comment').value;
   
-  store.innerHTML = '<h3>Інформація про замовлення</h3>' +
-    '<p>Назва товару: ' + orderInfo.productName + '</p>' +
-    '<p>Категорія: ' + orderInfo.category + '</p>' +
-    '<p>Ціна: ' + orderInfo.price + ' грн</p>' +
-    '<p>ПІБ покупця: ' + orderInfo.customerName + '</p>' +
-    '<p>Місто: ' + orderInfo.city + '</p>' +
-    '<p>Склад Нової пошти: ' + orderInfo.novaPoshta + '</p>' +
-    '<p>Спосіб оплати: ' + (orderInfo.paymentMethod === 'cash-on-delivery' ? 'Післяплата' : 'Оплата банківською карткою') + '</p>' +
-    '<p>Кількість: ' + orderInfo.quantity + '</p>' +
-    '<p>Коментар до замовлення: ' + orderInfo.comment + '</p>';
+  // Перевірка обов'язкових полів
+  if (customerName && city && postOffice && paymentMethod && quantity) {
+    // Формуємо інформацію про замовлення з усіма даними
+    const orderDetails = `
+      <p><strong>Назва товару:</strong> ${productName}</p>
+      <p><strong>Категорія:</strong> ${productCategory}</p>
+      <p><strong>Ціна:</strong> ${productPrice} грн</p>
+      <p><strong>ПІБ покупця:</strong> ${customerName}</p>
+      <p><strong>Місто:</strong> ${city}</p>
+      <p><strong>Склад Нової пошти для надсилання:</strong> ${postOffice}</p>
+      <p><strong>Післяплати або оплата банківської картки:</strong> ${paymentMethod}</p>
+      <p><strong>Кількість продукції, що купується:</strong> ${quantity}</p>
+      <p><strong>Коментар до замовлення:</strong> ${comment}</p>
+    `;
+    
+    // Виводимо інформацію про замовлення
+    document.getElementById('order-details-content').innerHTML = orderDetails;
+    document.getElementById('order-details').style.display = 'block';
+    orderForm.style.display = 'none';
+  } else {
+    alert('Будь ласка, заповніть всі обов\'язкові поля.');
+  }
 }
+
