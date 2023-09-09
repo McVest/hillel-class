@@ -5,10 +5,14 @@ const PRODUCT = [
   { name: 'Молоко', category: 'Категорія 2', price: 35 },
 ];
 
+const productList = document.getElementById('product-list');
+const productDetails = document.getElementById('product-details');
+const orderForm = document.getElementById('order-form');
+
 function showCategory(category) {
-  const productList = document.getElementById('product-list');
+  
   productList.innerHTML = '';
-  document.getElementById('product-details').innerHTML = '';
+  productDetails.innerHTML = '';
   const products = getProductsByCategory(category);
   const ulItem = document.createElement('ul');
   for (let i = 0; i < products.length; i++) {
@@ -32,7 +36,7 @@ function getProductsByCategory(category) {
 }
 
 function showProductDetails(productItems) {
-  document.getElementById('product-details').innerHTML = '';
+  productDetails.innerHTML = '';
   
   const productInfo = document.createElement('div');
   productInfo.innerHTML = `
@@ -40,11 +44,10 @@ function showProductDetails(productItems) {
     <p><strong>Категорія:</strong> ${productItems.category}</p>
     <p><strong>Ціна:</strong> ${productItems.price} грн</p>
     <button onclick="showOrderForm('${productItems.name}', '${productItems.category}', ${productItems.price})">Купити</button>`;
-  document.getElementById('product-details').appendChild(productInfo);
+  productDetails.appendChild(productInfo);
 }
 
 function showOrderForm(productName, productCategory, productPrice) {
-  const orderForm = document.getElementById('order-form');
   orderForm.style.display = 'block';
   
   orderForm.querySelector('#customer-name').value = '';
@@ -58,9 +61,7 @@ function showOrderForm(productName, productCategory, productPrice) {
   orderForm.dataset.productPrice = productPrice;
 }
 
-// Функція для підтвердження замовлення
 function confirmOrder() {
-  const orderForm = document.getElementById('order-form');
   const productName = orderForm.dataset.productName;
   const productCategory = orderForm.dataset.productCategory;
   const productPrice = orderForm.dataset.productPrice;
@@ -70,7 +71,6 @@ function confirmOrder() {
   const quantity = document.getElementById('quantity').value;
   const comment = document.getElementById('comment').value;
   
-  // Отримуємо значення обраного способу оплати, перевіряючи, чи є вибраний елемент
   const paymentCashOnDelivery = document.querySelector('input#payment-cash-on-delivery[name="payment-method"]:checked');
   const paymentCreditCard = document.querySelector('input#payment-credit-card[name="payment-method"]:checked');
   
@@ -81,9 +81,7 @@ function confirmOrder() {
   
   const paymentMethod = paymentCashOnDelivery ? paymentCashOnDelivery.value : paymentCreditCard.value;
   
-  // Перевірка обов'язкових полів
   if (customerName && city && postOffice && paymentMethod && quantity) {
-    // Формуємо інформацію про замовлення з усіма даними
     const orderDetails = `
       <p><strong>Назва товару:</strong> ${productName}</p>
       <p><strong>Категорія:</strong> ${productCategory}</p>
@@ -99,7 +97,7 @@ function confirmOrder() {
     // Виводимо інформацію про замовлення
     document.getElementById('order-details-content').innerHTML = orderDetails;
     document.getElementById('order-details').style.display = 'block';
-    document.getElementById('order-form').style.display = 'none';
+    orderForm.style.display = 'none';
   } else {
     alert('Будь ласка, заповніть всі обов\'язкові поля.');
   }
