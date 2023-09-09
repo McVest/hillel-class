@@ -24,5 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
     table.appendChild(tbody);
     tableContainer.innerHTML = "";
     tableContainer.appendChild(table);
+    form.style.display='none';
   });
 });
