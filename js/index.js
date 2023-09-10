@@ -68,11 +68,9 @@ orderFormFields.addEventListener('submit', function (e) {
   
   const form = document.getElementById('order-form-fields')
   const formData = new FormData(form);
-  console.log(formData.entries());
   
   for (const [key, value] of formData.entries()) {
     orderDetails[key] = value;
-    console.log(value);
   }
   const productName = orderForm.dataset.productName;
   const productCategory = orderForm.dataset.productCategory;
