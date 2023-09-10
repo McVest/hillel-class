@@ -8,6 +8,7 @@ const PRODUCT = [
 const productList = document.getElementById('product-list');
 const productDetails = document.getElementById('product-details');
 const orderForm = document.getElementById('order-form');
+const orderFormFields = document.getElementById('order-form-fields');
 
 function showCategory(category) {
   
@@ -49,58 +50,47 @@ function showProductDetails(productItems) {
 
 function showOrderForm(productName, productCategory, productPrice) {
   orderForm.style.display = 'block';
-  
-  orderForm.querySelector('#customer-name').value = '';
-  orderForm.querySelector('#city').selectedIndex = 0;
-  orderForm.querySelector('#post-office').value = '';
-  orderForm.querySelector('#quantity').value = '';
-  orderForm.querySelector('#comment').value = '';
-  
   orderForm.dataset.productName = productName;
   orderForm.dataset.productCategory = productCategory;
   orderForm.dataset.productPrice = productPrice;
 }
 
-function confirmOrder() {
+orderFormFields.addEventListener('submit', function (e) {
+  e.preventDefault();
+  const orderDetails = {
+    name: '',
+    city: '',
+    post_office: '',
+    payment_method: '',
+    quantity: '',
+    comment: ''
+  };
+  
+  const form = document.getElementById('order-form-fields')
+  const formData = new FormData(form);
+  console.log(formData.entries());
+  
+  for (const [key, value] of formData.entries()) {
+    orderDetails[key] = value;
+    console.log(value);
+  }
   const productName = orderForm.dataset.productName;
   const productCategory = orderForm.dataset.productCategory;
   const productPrice = orderForm.dataset.productPrice;
-  const customerName = document.getElementById('customer-name').value;
-  const city = document.getElementById('city').value;
-  const postOffice = document.getElementById('post-office').value;
-  const quantity = document.getElementById('quantity').value;
-  const comment = document.getElementById('comment').value;
   
-  const paymentCashOnDelivery = document.querySelector('input#payment-cash-on-delivery[name="payment-method"]:checked');
-  const paymentCreditCard = document.querySelector('input#payment-credit-card[name="payment-method"]:checked');
-  
-  if (!paymentCashOnDelivery && !paymentCreditCard) {
-    alert('Будь ласка, виберіть спосіб оплати.');
-    return;
-  }
-  
-  const paymentMethod = paymentCashOnDelivery ? paymentCashOnDelivery.value : paymentCreditCard.value;
-  
-  if (customerName && city && postOffice && paymentMethod && quantity) {
-    const orderDetails = `
+  document.getElementById('order-details-content').innerHTML = `
       <p><strong>Назва товару:</strong> ${productName}</p>
       <p><strong>Категорія:</strong> ${productCategory}</p>
       <p><strong>Ціна:</strong> ${productPrice} грн</p>
-      <p><strong>ПІБ покупця:</strong> ${customerName}</p>
-      <p><strong>Місто:</strong> ${city}</p>
-      <p><strong>Склад Нової пошти для надсилання:</strong> ${postOffice}</p>
-      <p><strong>Спосіб оплати:</strong> ${paymentMethod}</p>
-      <p><strong>Кількість продукції, що купується:</strong> ${quantity}</p>
-      <p><strong>Коментар до замовлення:</strong> ${comment}</p>
+      <p><strong>ПІБ покупця:</strong> ${orderDetails.name}</p>
+      <p><strong>Місто:</strong> ${orderDetails.city}</p>
+      <p><strong>Склад Нової пошти для надсилання:</strong> ${orderDetails.post_office}</p>
+      <p><strong>Спосіб оплати:</strong> ${orderDetails.payment_method}</p>
+      <p><strong>Кількість продукції, що купується:</strong> ${orderDetails.quantity}</p>
+      <p><strong>Коментар до замовлення:</strong> ${orderDetails.comment}</p>
     `;
-    
-    // Виводимо інформацію про замовлення
-    document.getElementById('order-details-content').innerHTML = orderDetails;
-    document.getElementById('order-details').style.display = 'block';
-    orderForm.style.display = 'none';
-  } else {
-    alert('Будь ласка, заповніть всі обов\'язкові поля.');
-  }
-}
-
-
+  
+  document.getElementById('order-details').style.display = 'block';
+  orderForm.style.display = 'none';
+  form.reset();
+})
