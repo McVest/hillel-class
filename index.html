@@ -84,46 +84,43 @@
 	<div id="product-details">
 	</div>
 </div>
-<!-- Додаємо форму для оформлення замовлення -->
 <div id="order-form" style="display: none;">
 	<h2>Форма оформлення замовлення</h2>
 	<form id="order-form-fields">
 		<div class="input">
 			<label for="customer-name">ПІБ покупця:</label>
-			<input type="text" id="customer-name" required>
+			<input type="text" name="name" id="customer-name" required>
 		</div>
 		<div class="input">
 			<label for="city">Місто:</label>
-			<select id="city" required>
+			<select id="city" name="city" required>
 				<option value="Київ">Київ</option>
 				<option value="Львів">Львів</option>
 				<option value="Харків">Харків</option>
-				<!-- Додайте інші міста за потреби -->
 			</select>
 		</div>
 		<div class="input">
 			<label for="post-office">Склад Нової пошти для надсилання:</label>
-			<input type="text" id="post-office" required><br>
+			<input type="text"  name="post_office" id="post-office" required><br>
 		</div>
 		<div class="input" style="flex-direction: row;">
 			<label>Спосіб оплати:</label><br>
-			<input type="radio" id="payment-cash-on-delivery" name="payment-method" value="Післяплати">
+			<input type="radio" id="payment-cash-on-delivery" name="payment_method" value="Післяплати">
 			<label for="payment-cash-on-delivery">Післяплати</label><br>
-			<input type="radio" id="payment-credit-card" name="payment-method" value="Банківська карта">
+			<input type="radio" id="payment-credit-card" name="payment_method" value="Банківська карта">
 			<label for="payment-credit-card">Банківська карта</label>
 		</div>
 		<div class="input">
 			<label for="quantity">Кількість продукції, що купується:</label>
-			<input type="number" id="quantity" required><br>
+			<input type="number" name="quantity" id="quantity" required><br>
 		</div>
 		<div class="input">
 			<label for="comment">Коментар до замовлення:</label>
-			<textarea id="comment"></textarea><br>
+			<textarea id="comment" name="comment"></textarea><br>
 		</div>
-		<button type="button" onclick="confirmOrder()">Підтвердити замовлення</button>
+		<button type="submit" id="submit-btn">Підтвердити замовлення</button>
 	</form>
 </div>
-<!-- Виводимо інформацію про замовлення -->
 <div id="order-details" style="display: none;">
 	<h2>Інформація про замовлення</h2>
 	<div id="order-details-content">

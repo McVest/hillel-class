@@ -8,7 +8,8 @@ const PRODUCT = [
 const productDetails = document.getElementById('product-details');
 const productList = document.getElementById('product-list');
 const orderForm = document.getElementById('order-form');
-
+const orderFormFields = document.getElementById('order-form-fields');
+const orderDetails = document.getElementById('order-details');
 
 let orders = [];
 
@@ -69,61 +70,40 @@ function showProductDetails(productItems) {
 
 function showOrderForm(productName, productCategory, productPrice) {
   orderForm.style.display = 'block';
-  
-  orderForm.querySelector('#customer-name').value = '';
-  orderForm.querySelector('#city').selectedIndex = 0;
-  orderForm.querySelector('#post-office').value = '';
-  orderForm.querySelector('#quantity').value = '';
-  orderForm.querySelector('#comment').value = '';
-  
   orderForm.dataset.productName = productName;
   orderForm.dataset.productCategory = productCategory;
   orderForm.dataset.productPrice = productPrice;
 }
 
-function confirmOrder() {
-  const productName = orderForm.dataset.productName;
-  const productCategory = orderForm.dataset.productCategory;
-  const productPrice = orderForm.dataset.productPrice;
-  const customerName = document.getElementById('customer-name').value;
-  const city = document.getElementById('city').value;
-  const postOffice = document.getElementById('post-office').value;
-  const quantity = document.getElementById('quantity').value;
-  const comment = document.getElementById('comment').value;
-  
-  const paymentCashOnDelivery = document.querySelector('input#payment-cash-on-delivery[name="payment-method"]:checked');
-  const paymentCreditCard = document.querySelector('input#payment-credit-card[name="payment-method"]:checked');
-  
-  if (!paymentCashOnDelivery && !paymentCreditCard) {
-    alert('Будь ласка, виберіть спосіб оплати.');
-    return;
-  }
-  
-  const paymentMethod = paymentCashOnDelivery ? paymentCashOnDelivery.value : paymentCreditCard.value;
+orderFormFields.addEventListener('submit', function (e) {
+  e.preventDefault();
   const orderDetails = {
-    date: new Date().toLocaleDateString(),
-    productName: productName,
-    productCategory: productCategory,
-    productPrice: productPrice,
-    customerName: customerName,
-    city: city,
-    postOffice: postOffice,
-    paymentMethod: paymentMethod,
-    quantity: quantity,
-    comment: comment,
+    name: '',
+    city: '',
+    post_office: '',
+    payment_method: '',
+    quantity: '',
+    comment: ''
   };
-  if (customerName && city && postOffice && paymentMethod && quantity) {
-    orderDetailsContent(orderDetails);
-    saveOrder(orderDetails);
-    orderForm.style.display = 'none';
-  } else {
-    alert('Будь ласка, заповніть всі обов\'язкові поля.');
+  
+  const formData = new FormData(orderFormFields);
+  
+  for (const [key, value] of formData.entries()) {
+    orderDetails[key] = value;
   }
-}
+  orderDetails.productName = orderForm.dataset.productName;
+  orderDetails.productCategory = orderForm.dataset.productCategory;
+  orderDetails.productPrice = orderForm.dataset.productPrice;
+  saveOrder(orderDetails);
+  orderDetailsContent(orderDetails);
+  
+  orderForm.style.display = 'none';
+  orderFormFields.reset();
+})
 function showMyOrders() {
   productList.innerHTML = '';
   productDetails.innerHTML = '';
-  document.getElementById('order-details').style.display = 'none';
+  orderDetails.style.display = 'none';
   
   const myOrders = getOrders();
   const ulItem = document.createElement('ul');
@@ -131,7 +111,7 @@ function showMyOrders() {
     const listItem = document.createElement('li');
     listItem.innerHTML =
       `<div>
-          <a href="#" onclick="showOrderDetails(${index})">${order.date} - ${order.productPrice} грн</a>
+          <a href="#" onclick="showOrderDetails(${index})">${order.productName} - ${order.productPrice} грн</a>
           <button type="button" onclick="deleteOrder(${index})">Видалити замовлення</button>
       </div>`;
     ulItem.appendChild(listItem);
@@ -140,6 +120,7 @@ function showMyOrders() {
 }
 function showOrderDetails(index) {
   const order = getOrders()[index];
+  console.log(order);
   orderDetailsContent(order);
 }
 
@@ -149,12 +130,12 @@ function orderDetailsContent(order){
       <p><strong>Назва товару:</strong> ${order.productName}</p>
       <p><strong>Категорія:</strong> ${order.productCategory}</p>
       <p><strong>Ціна:</strong> ${order.productPrice} грн</p>
-      <p><strong>ПІБ покупця:</strong> ${order.customerName}</p>
+      <p><strong>ПІБ покупця:</strong> ${order.name}</p>
       <p><strong>Місто:</strong> ${order.city}</p>
-      <p><strong>Склад Нової пошти для надсилання:</strong> ${order.postOffice}</p>
-      <p><strong>Спосіб оплати:</strong> ${order.paymentMethod}</p>
+      <p><strong>Склад Нової пошти для надсилання:</strong> ${order.post_office}</p>
+      <p><strong>Спосіб оплати:</strong> ${order.payment_method}</p>
       <p><strong>Кількість продукції, що купується:</strong> ${order.quantity}</p>
       <p><strong>Коментар до замовлення:</strong> ${order.comment}</p>
     `;
-  document.getElementById('order-details').style.display = 'block';
+  orderDetails.style.display = 'block';
 }
