@@ -1,7 +1,7 @@
 import gulp from 'gulp';
 import minihtml from 'gulp-htmlmin';
-import scriptDebug from 'gulp-strip-debug';
 import concat from 'gulp-concat';
+import gulpBabel from 'gulp-babel';
 import uglify from 'gulp-uglify';
 import {deleteAsync} from 'del';
 import gulpSass from 'gulp-sass';
@@ -16,7 +16,10 @@ const scriptsPath = [
   `${src}/js/human.js`,
   `${src}/js/index.js`,
 ];
-const scssPath = `${src}/scss/*.scss`;
+const scssPath = [
+  `${src}/scss/*.scss`,
+  `${src}/scss/*.css`,
+];
 
 const reset = () => {
   return deleteAsync(dist);
@@ -27,6 +30,7 @@ const copy = () => {
     "${src}/**/*.*",
     `!${htmlPath}`,
     `!${scriptsPath}`,
+    `!${scssPath}`,
   ])
 }
 
@@ -39,6 +43,7 @@ const html = () => {
 const scripts = () => {
   return gulp.src(scriptsPath)
     .pipe(concat('script.js'))
+    .pipe(gulpBabel({presets: ['@babel/env']}))
     .pipe(uglify())
     .pipe(gulp.dest(dist))
 }
@@ -47,17 +52,22 @@ const scssProcessor = gulpSass(sass);
 const cssCompile = () => {
   return gulp.src(scssPath)
     .pipe(scssProcessor({outputStyle: "compressed"}))
+    .pipe(concat('styles.css'))
     .pipe(gulp.dest(`${dist}/css`))
 }
 
 const watchers = () => {
   gulp.watch(htmlPath, html);
+  gulp.watch(scriptsPath, scripts);
   gulp.watch([
     `${src}/**/*.*`,
     `!${htmlPath}`,
+    `!${scriptsPath}`,
+    `!${scssPath}`,
   ], copy);
 }
 
-const launch = gulp.series(reset, copy, html, cssCompile, scripts);
+const mainBuild = gulp.parallel(html, cssCompile, scripts);
+const launch = gulp.series(reset, mainBuild, copy, watchers);
 
 gulp.task('default', launch);
