@@ -1,4 +1,4 @@
-export class Car {
+class Car {
   owner;
   
   constructor(brand, model, licensePlate, yearOfManufacture) {
