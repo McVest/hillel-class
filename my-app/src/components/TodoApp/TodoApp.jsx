@@ -8,19 +8,7 @@ const TodoItem = ({todo, onClick}) => {
   );
 };
 
-const TodoList = () => {
-  const [todos, setTodos] = useState([
-    {text: 'Зробити покупки', completed: false},
-    {text: 'Вивчити React', completed: true},
-    {text: 'Приготувати обід', completed: false},
-  ]);
-  
-  const toggleTodo = (index) => {
-    const newTodos = [...todos];
-    newTodos[index].completed = !newTodos[index].completed;
-    setTodos(newTodos);
-  };
-  
+const TodoList = ({ todos, toggleTodo }) => {
   return (
     <div>
       {todos.map((todo, index) => (
@@ -60,10 +48,16 @@ const TodoForm = ({addTodo}) => {
 
 const TodoApp = () => {
   const [todos, setTodos] = useState([
-    {text: 'Зробити покупки', completed: false},
+    {text: 'Зробити Домашку', completed: false},
     {text: 'Вивчити React', completed: true},
-    {text: 'Приготувати обід', completed: false},
+    {text: 'Приготувати вечерю', completed: false},
   ]);
+  
+  const toggleTodo = (index) => {
+    const newTodos = [...todos];
+    newTodos[index].completed = !newTodos[index].completed;
+    setTodos(newTodos);
+  };
   
   const addTodo = (text) => {
     const newTodo = {text: text, completed: false};
@@ -73,7 +67,7 @@ const TodoApp = () => {
   return (
     <div>
       <h2>Список задач</h2>
-      <TodoList todos={todos}/>
+      <TodoList todos={todos} toggleTodo={toggleTodo} />
       <h2>Додати задачу</h2>
       <TodoForm addTodo={addTodo}/>
     </div>
