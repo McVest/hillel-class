@@ -1,6 +1,6 @@
 import {MyForm} from "../index";
 
-const MainContainer = () => {
+const Home = () => {
   return (
     <div className="main-container" style={{width:"100%",display: "flex", justifyContent: "center"}}>
       <MyForm />
@@ -8,4 +8,4 @@ const MainContainer = () => {
   );
 };
 
-export default MainContainer;
+export default Home;

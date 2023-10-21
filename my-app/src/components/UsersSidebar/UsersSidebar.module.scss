@@ -1,0 +1,19 @@
+.usersSidebar {
+  height: 100%;
+  max-height: 100dvh;
+  overflow-y: auto;
+
+  .usersItem {
+    padding: 10px;
+
+    .userName, .userEmail {
+      margin: 0;
+      font-size: 12px;
+    }
+    .userLink{
+      a{
+        text-decoration: none;
+      }
+    }
+  }
+}

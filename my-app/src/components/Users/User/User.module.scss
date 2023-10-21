@@ -1,0 +1,20 @@
+.user {
+  padding: 0 32px;
+}
+
+.userAlbum {
+  padding: 0 32px;
+  .photo {
+    margin-top: 10px;
+    .photoTitle {
+      margin: 0;
+    }
+
+    .photoImg {
+      max-width: 200px;
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+  }
+}

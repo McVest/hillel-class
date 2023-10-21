@@ -1,5 +1,10 @@
-export {default as MainContainer} from "./MainContainer/MainContainer";
+export {default as Layout} from "./Layout";
+export {default as NoPage} from "./NoPage/NoPage";
+export {default as Home} from "./Home/Home";
 export {default as Header} from './Header/Header';
-export {default as Sidebar} from "./Sidebar/Sidebar"
 export {default as TodoApp} from "./TodoApp/TodoApp"
 export {default as MyForm} from "./MyForm/MyForm"
+export {default as Users} from "./Users/Users"
+export {default as User} from "./Users/User/User"
+export {default as UserAlbums} from "./Users/User/UserAlbums"
+export {default as UsersSidebar} from "./UsersSidebar/UsersSidebar"
