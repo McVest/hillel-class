@@ -2,6 +2,7 @@ export const COMMANDS={
   ADD_TODO:'ADD_TODO',
   TOGGLE_TODO:'TOGGLE_TODO',
   DELETE_TODO:'DELETE_TODO',
+  EDIT_TODO:'EDIT_TODO',
 }
 
 const initialState = {
@@ -30,6 +31,15 @@ const todoReducer = (state = initialState, action) => {
       console.log(updatedTodos);
       return {
         todos: updatedTodos,
+      };
+    case COMMANDS.EDIT_TODO:
+      const editedTodos = [...state.todos];
+      if (!editedTodos[action.index].completed) {
+        editedTodos[action.index].text = action.newText;
+        editedTodos[action.index].completed = false;
+      }
+      return {
+        todos: editedTodos,
       };
     default:
       return state;

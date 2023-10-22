@@ -18,3 +18,11 @@ export const deleteTodo = (index) => {
     index,
   };
 };
+
+export const editTodo = (index, newText) => {
+  return {
+    type: 'EDIT_TODO',
+    index,
+    newText,
+  };
+};
