@@ -1,25 +1,41 @@
-import React, {useState} from 'react';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {addTodo, toggleTodo,deleteTodo} from "../../reducer/actions";
 
-const TodoItem = ({todo, onClick}) => {
+const TodoItem = ({ todo, index }) => {
+  const dispatch = useDispatch();
+  
+  const handleToggle = () => {
+    dispatch(toggleTodo(index));
+  };
+  const deleteTodos = (e) => {
+    e.stopPropagation();
+    dispatch(deleteTodo(index));
+  };
+  
   return (
-    <div style={{cursor: 'pointer'}} onClick={onClick}>
-      <span style={{cursor: 'pointer', textDecoration: todo.completed ? 'line-through' : 'none'}}>{todo.text}</span>
+    <div style={{ cursor: 'pointer' }} onClick={handleToggle}>
+      <span style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>{todo.text}</span>
+      <button onClick={deleteTodos}>delete todo</button>
     </div>
   );
 };
 
-const TodoList = ({ todos, toggleTodo }) => {
+const TodoList = () => {
+  const todos = useSelector((state) => state.todos);
+  
   return (
     <div>
       {todos.map((todo, index) => (
-        <TodoItem key={index} todo={todo} onClick={() => toggleTodo(index)}/>
+        <TodoItem key={`${todo.text}-${index}`} todo={todo} index={index} />
       ))}
     </div>
   );
 };
 
-const TodoForm = ({addTodo}) => {
-  const [inputValue, setInputValue] = useState('');
+const TodoForm = () => {
+  const dispatch = useDispatch();
+  const [inputValue, setInputValue] = React.useState('');
   
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -28,48 +44,26 @@ const TodoForm = ({addTodo}) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (inputValue.trim() !== '') {
-      addTodo(inputValue);
+      dispatch(addTodo(inputValue));
       setInputValue('');
     }
   };
   
   return (
     <form onSubmit={handleFormSubmit}>
-      <input
-        type="text"
-        value={inputValue}
-        onChange={handleInputChange}
-        placeholder="Введіть справу"
-      />
+      <input type="text" value={inputValue} onChange={handleInputChange} placeholder="Введіть справу" />
       <button type="submit">Додати</button>
     </form>
   );
 };
 
 const TodoApp = () => {
-  const [todos, setTodos] = useState([
-    {text: 'Зробити Домашку', completed: false},
-    {text: 'Вивчити React', completed: true},
-    {text: 'Приготувати вечерю', completed: false},
-  ]);
-  
-  const toggleTodo = (index) => {
-    const newTodos = [...todos];
-    newTodos[index].completed = !newTodos[index].completed;
-    setTodos(newTodos);
-  };
-  
-  const addTodo = (text) => {
-    const newTodo = {text: text, completed: false};
-    setTodos([...todos, newTodo]);
-  };
-  
   return (
     <div>
-      <h2>Список задач</h2>
-      <TodoList todos={todos} toggleTodo={toggleTodo} />
-      <h2>Додати задачу</h2>
-      <TodoForm addTodo={addTodo}/>
+      <h2>Список тудушок</h2>
+      <TodoList />
+      <h2>Додати тудушку</h2>
+      <TodoForm />
     </div>
   );
 };
